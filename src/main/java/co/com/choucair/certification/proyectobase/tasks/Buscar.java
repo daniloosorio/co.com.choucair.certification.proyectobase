@@ -24,6 +24,7 @@ public class Buscar  implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 Click.on(SearchCoursePage.BUTON_UC)
+                //continua escribir el curso no se impelementa porque no se tiene permisos
         );
     }
 }

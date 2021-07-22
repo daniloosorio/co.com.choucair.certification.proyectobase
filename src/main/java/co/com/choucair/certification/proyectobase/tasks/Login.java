@@ -14,16 +14,26 @@ import static co.com.choucair.certification.proyectobase.userinterface.ChoucairL
 
 public class Login implements Task {
 
-    public static Login OnThepage() {
-        return Tasks.instrumented(Login.class);
+
+    public Login(String strUser, String strPassword) {
+        this.strUser = strUser;
+        this.strPassword = strPassword;
+    }
+
+    private String strUser;
+    private String strPassword;
+
+    public static Login OnThepage(String strUser,String strPassword) {
+
+        return Tasks.instrumented(Login.class,strUser,strPassword);
     }
 
     @Override
     public <T extends Actor> void performAs(T actor) {
        actor.wasAbleTo(
                 Click.on(BUTON_LOGIN),
-               Enter.theValue("1036662427").into(ChoucairLoginPage.INPUT_USER),
-               Enter.theValue("Choucair2021*").into(ChoucairLoginPage.INPUT_PASSWORD),
+               Enter.theValue(strUser).into(ChoucairLoginPage.INPUT_USER),
+               Enter.theValue(strPassword).into(ChoucairLoginPage.INPUT_PASSWORD),
                Click.on(BUTON_ACCEDER)
         );
     }

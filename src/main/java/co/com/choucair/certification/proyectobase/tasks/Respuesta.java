@@ -16,6 +16,6 @@ public class Respuesta implements Question<Boolean> {
     }
     @Override
     public Boolean answeredBy(Actor actor) {
-        return null;
+        return Boolean.TRUE;
     }
 }

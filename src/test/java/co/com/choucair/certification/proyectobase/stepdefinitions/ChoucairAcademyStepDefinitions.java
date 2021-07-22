@@ -1,5 +1,6 @@
 package co.com.choucair.certification.proyectobase.stepdefinitions;
 
+import co.com.choucair.certification.proyectobase.model.AcademyChoucairData;
 import co.com.choucair.certification.proyectobase.tasks.*;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -11,6 +12,9 @@ import net.serenitybdd.screenplay.actors.OnlineCast;
 import org.fluentlenium.core.search.Search;
 import org.mockito.stubbing.Answer;
 
+import java.util.List;
+
+import static co.com.choucair.certification.proyectobase.tasks.Login.OnThepage;
 import static net.serenitybdd.screenplay.actors.OnStage.*;
 
 public class ChoucairAcademyStepDefinitions {
@@ -22,21 +26,22 @@ public class ChoucairAcademyStepDefinitions {
     }
 
     @Given("^than brandom wants to learn automation at academy Choucair$")
-    public void thanBrandomWantsToLearnAutomationAtAcademyChoucair() {
-       ///para el login
-        OnStage.theActorCalled("brandom").wasAbleTo(Login.OnThepage());
-        ///para el registro
-        //OnStage.theActorCalled("brandom").wasAbleTo(Register.OnThepage());
+    public void thanBrandomWantsToLearnAutomationAtAcademyChoucair(List<AcademyChoucairData> academyChoucairData) {
+        OnStage.theActorCalled("brandom").wasAbleTo(
+                OnThepage(academyChoucairData.get(0).getStrUser(),
+                        academyChoucairData.get(0).getStrPassword())
+        );
     }
 
-    @When("^he search for the course (.*) on the choucair academy platform$")
-    public void heSearchForTheCourseRecursosAutomatizacionBancolombiaOnTheChoucairAcademyPlatform(String course) {
-        OnStage.theActorInTheSpotlight().attemptsTo(Buscar.the(course));
+    @When("^he search for the course  on the choucair academy platform$")
+    public void heSearchForTheCourseOnTheChoucairAcademyPlatform(List<AcademyChoucairData> academyChoucairData) {
+        OnStage.theActorInTheSpotlight().attemptsTo(Buscar.the(academyChoucairData.get(0).getStrCourse()));
         ///solo llegue hasta el boton universidad choucair ya que no tengo acceso a lo demas.
     }
 
-    @Then("^he finds the course called resourses (.*)$")
-    public void heFindsTheCourseCalledResoursesRecursosAutomatizacionBancolombia(String question) {
-        OnStage.theActorInTheSpotlight().should(GivenWhenThen.seeThat(Respuesta.toThe(question)));
+    @Then("^he finds the course called resourses$")
+    public void heFindsTheCourseCalledResourses(List<AcademyChoucairData> academyChoucairData) {
+        OnStage.theActorInTheSpotlight().should(GivenWhenThen.seeThat(Respuesta.toThe(academyChoucairData.get(0).getStrCourse())));
     }
 }
+
